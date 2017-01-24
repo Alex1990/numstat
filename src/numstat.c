@@ -6,7 +6,7 @@
 #include "numstat.h"
 #include "measure.h"
 
-static const char* VERSION = "0.1.0";
+extern const char* VERSION;
 
 void print_version() {
   printf("%s\n", VERSION);

@@ -2,6 +2,12 @@
 #include <math.h>
 #include <stdlib.h>
 
+#include "parse_num_list.h"
+
+#ifndef PARSE_STACK_INIT_SIZE
+#define PARSE_STACK_INIT_SIZE 8
+#endif
+
 #define ISDIGIT(ch) ((ch) >= '0' && (ch) <= '9')
 #define ISDIGIT1TO9(ch) ((ch) >= '1' && (ch) <= '9')
 
@@ -32,14 +38,15 @@ int parse_number(char **numstr, double* np) {
     for (p++; ISDIGIT(*p); p++);
   }
   errno = 0;
-  *np = strtod(numstr, NULL);
-  if (errno = ERANGE && *np == HUGE_VAL || *np == -HUGE_VAL))
+  *np = strtod(*numstr, NULL);
+  if (errno == ERANGE && (*np == HUGE_VAL || *np == -HUGE_VAL))
     return PARSE_NUMBER_TOO_BIG;
   *numstr = p;
   return PARSE_OK;
 }
 
 int parse_num_list(char *numstr, num_list *list) {
+  int ret;
   double num;
 
   parse_whitespace(&numstr);
@@ -47,7 +54,7 @@ int parse_num_list(char *numstr, num_list *list) {
   while ((ret = parse_number(&numstr, &num)) == PARSE_OK) {
     if (list->top >= list->size) {
       if (list->size == 0)
-        list->size = PARSE_STATCK_INIT_SIZE;
+        list->size = PARSE_STACK_INIT_SIZE;
       else
         list->size += list->size >> 1; /* list->size * 1.5 */
       list->value = (double *)realloc(list->value, list->size);

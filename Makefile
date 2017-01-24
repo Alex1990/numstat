@@ -3,7 +3,7 @@ CFLAGS += -std=c99 -Wall -O2
 SRC := numstat.c measure.c parse_num_list.c
 
 BIN := numstat
-VER ?= $(shell git describe --tags --always --dirty)
+VER ?= $(shell git describe --tags --always)
 
 ODIR := obj
 OBJ := $(patsubst %.c, $(ODIR)/%.o, $(SRC)) $(ODIR)/version.o
@@ -15,7 +15,7 @@ clean:
 
 $(BIN): $(OBJ)
 	@echo LINK $(BIN)
-	@$(CC) -O $@ $^
+	@$(CC) -o $@ $^
 
 $(ODIR):
 	@mkdir -p $@
