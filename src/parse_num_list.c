@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <errno.h>
 #include <math.h>
 #include <stdlib.h>
@@ -57,14 +58,14 @@ int parse_num_list(char *numstr, num_list *list) {
         list->size = PARSE_STACK_INIT_SIZE;
       else
         list->size += list->size >> 1; /* list->size * 1.5 */
-      list->value = (double *)realloc(list->value, list->size);
+      list->value = (double *)realloc(list->value, sizeof(double) * list->size);
     }
 
+    list->value[list->top] = num;
     list->top = list->top + 1;
-    list->value[list->top - 1] = num;
     parse_whitespace(&numstr);
     if (*numstr == ',') numstr++;
-    if (*numstr == '\n' || *numstr == '\0') break;
+    if (*numstr == '\n' || *numstr == '\0' || *numstr == EOF) break;
   }
 
   return ret;

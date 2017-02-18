@@ -37,8 +37,11 @@ static struct option long_options[] = {
 
 int main (int argc, char **argv) {
   int c;
+  int ret;
   char *measure;
   char *numstr;
+  double result;
+  num_list nl;
 
   while (1) {
     int option_index = 0;
@@ -55,7 +58,7 @@ int main (int argc, char **argv) {
         print_help();
         break;
       case 'm':
-        measure = malloc(strlen(optarg));
+        measure = (char *) malloc(sizeof(char) * (strlen(optarg) + 1));
         strcpy(measure, optarg);
         break;
       default:
@@ -65,7 +68,30 @@ int main (int argc, char **argv) {
 
   if (optind < argc) {
     numstr = argv[optind];
-    printf("%s\n", numstr);
+    ret = parse_num_list(numstr, &nl);
+
+    if (ret == PARSE_OK) {
+      if (strcmp(measure, "min") == 0) {
+        result = min(nl.top, nl.value);
+      } else if (strcmp(measure, "max") == 0) {
+        result = max(nl.top, nl.value);
+      } else if (strcmp(measure, "median") == 0) {
+        result = median(nl.top, nl.value);
+      } else if (strcmp(measure, "avg") == 0) {
+        result = avg(nl.top, nl.value);
+      } else if (strcmp(measure, "variance") == 0 ||
+          strcmp(measure, "var") == 0) {
+        result = variance(nl.top, nl.value);
+      } else if (strcmp(measure, "standard_deviation") == 0 ||
+          strcmp(measure, "sd") == 0) {
+        result = standard_deviation(nl.top, nl.value);
+      } else {
+        result = sum(nl.top, nl.value);
+      }
+      printf("%f\n", result);
+    } else {
+      return ret;
+    }
   }
 
   return 0;
