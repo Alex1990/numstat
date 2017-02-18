@@ -3,7 +3,7 @@ Output the measures of an list of numbers, such as sum, minimum, maximum and so 
 
 ## Usage
 
-```sh
+```txt
 $ numstat --help
 Usage: numstat [option]... <number_list>                       
 Output the measures of an list of numbers, such as sum, avg,    
