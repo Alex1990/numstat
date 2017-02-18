@@ -1,5 +1,5 @@
 # numstat
-Output the measures of an list of numbers, such as sum, minimum, maximum and so on.
+Output the measures of a list of numbers, such as sum, minimum, maximum and so on.
 
 ## Usage
 
