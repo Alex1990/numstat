@@ -15,16 +15,18 @@ void print_version() {
 
 void print_help() {
   printf("Usage: numstat [option]... <number_list>                       \n"
-        "Output the measures of an list of numbers, such as count, sum,  \n"
+        "Output the measures of an list of numbers, such as sum, avg,    \n"
         "minimum, maximum and so on.                                     \n"
         "                                                                \n"
         "  -m, --measure=[type] Specify the measure, the valid measure   \n"
-        "                       can be count, sum, min, max, avg, median,\n"
+        "                       can be sum, min, max, avg, median,       \n"
         "                       avg, var, sd. The var is variance. The   \n"
         "                       sd is standard derivation. The default   \n"
-        "                       meausre type is count                    \n"
+        "                       measure type is sum                      \n"
         "  -h, --help      Print the help                                \n"
-        "  -v, --version   Print the version\n");
+        "  -v, --version   Print the version                             \n"
+        "                                                                \n"
+        "The <number_list> is a list of numbers separated by commons. \n");
   exit(0);
 }
 
